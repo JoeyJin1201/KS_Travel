@@ -1,0 +1,15 @@
+.wrap {
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden; }
+
+.page {
+  display: inline-block;
+  cursor: pointer;
+  margin: 10px; }
+
+.underLine {
+  text-decoration: underline; }
+
+.listPicture {
+  width: 464px; }

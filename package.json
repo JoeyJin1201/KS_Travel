@@ -1,0 +1,23 @@
+{
+  "name": "ks_travel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoeyJin1201/KS_Travel.git"
+  },
+  "author": "joey831201@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JoeyJin1201/KS_Travel/issues"
+  },
+  "homepage": "https://github.com/JoeyJin1201/KS_Travel#readme",
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "gulp-sass": "^4.0.2"
+  }
+}

@@ -25,7 +25,7 @@ xhr.onload = function () {
 }
 
 page.addEventListener('click', changePage, true);
-Zone.addEventListener('change', updateList, false);
+Zone.addEventListener('change', updateList, true);
 
 function ZoneSelectOptions() {
   let options = '<option value="default">- -請選擇行政區- -</option>';
