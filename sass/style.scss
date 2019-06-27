@@ -1,7 +1,11 @@
 body{
   font-family: "Noto Sans TC", sans-serif;
   select {
+    -webkit-appearance:none;
+    cursor: pointer;
+    // -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     font-family: "Noto Sans TC", sans-serif;
+    
   }
 }
 .wrap {
@@ -23,14 +27,14 @@ body{
       left:50%;
       transform: translateX(-50%);
     }
-    #zone {
+    #zone-selections {
       font-size: 18px;
       background-color: rgba(255,255,255,0.7);
       position: absolute;
       top:225px;
       left:50%;
       transform: translateX(-50%);
-      padding: 13px 150px 13px 10px;
+      padding: 13px 400px 13px 10px;
       border: 3px solid;
       border-color: rgba(255,255,255,1);
       border-radius: 3px;
@@ -67,7 +71,6 @@ body{
     }
   }
   .content {
-    height:250vh;
     padding-top: 133px;
     .line-wrap {
       position: relative;
@@ -83,23 +86,100 @@ body{
         background-size: 15px 100%;
       }
     }
-    #list{
+    .content-list{
       margin-top:50px;
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
-      li {
+      justify-content: flex-start;
+      .content-list-item {
+        box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
         position: relative;
         width:464px;
         margin:0 8px 36px 8px;
-        // height:273px;
-        h2 {
+        padding-bottom: 22px;
+        .item-name {
           position: absolute;
           font-size: 24px;
           color:white;
           line-height: 28px;
           left:22px;
           top:117px;
+        }
+        .item-img-wrap {
+          height:155px;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+        }
+        .item-img {
+          max-width: 100%;
+        }
+        .item-zone {
+          color:white;
+          position: absolute;
+          font-size: 16px;
+          line-height: 19px;
+          right:24px;
+          top:125px;
+        }
+        .item-open-time,
+        .item-add,
+        .item-tel {
+          padding-top: 16px;
+          padding-left:50px;
+          font-size: 16px;
+          line-height: 18px;
+        }
+        .item-open-time {
+          &:before {
+            position: absolute;
+            content: '';
+            width:18px;
+            height:18px;
+            left:23px;
+            z-index: 1;
+            background-image:url(../img/icons_clock.png);
+            background-position: center center;
+            background-size: 18px 18px;
+          }
+        }
+        .item-add {
+          &:before {
+            position: absolute;
+            content: '';
+            width:16px;
+            height:20px;
+            left:24px;
+            z-index: 1;
+            background-image:url(../img/icons_pin.png);
+            background-position: center center;
+            background-size: 16px 20px;
+          }
+        }
+        .item-tel {
+          &:before {
+            position: absolute;
+            content: '';
+            width:12px;
+            height:20px;
+            left:26px;
+            z-index: 1;
+            background-image:url(../img/icons_phone.png);
+            background-position: center center;
+            background-size: 12px 20px;
+          }
+        }
+        .tag {
+          position: absolute;
+          right:98px;
+          bottom: 20px;
+        }
+        .item-ticket-info {
+          position: absolute;
+          font-size: 16px;
+          line-height: 19px;
+          right:24px;
+          bottom: 19px;
         }
       }
     }
@@ -116,13 +196,12 @@ body{
   text-decoration: underline;
 }
 
-.list-img {
-  height:155px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
+.container {
+  margin: 0 auto;
 }
 
-.listPicture {
-  max-width: 100%;
+@media (min-width: 1024px) {
+  .wrap {
+    max-width: 1024px;
+  }
 }

@@ -1,6 +1,8 @@
 body {
   font-family: "Noto Sans TC", sans-serif; }
   body select {
+    -webkit-appearance: none;
+    cursor: pointer;
     font-family: "Noto Sans TC", sans-serif; }
 
 .wrap {
@@ -21,14 +23,14 @@ body {
       top: 89px;
       left: 50%;
       transform: translateX(-50%); }
-    .wrap header #zone {
+    .wrap header #zone-selections {
       font-size: 18px;
       background-color: rgba(255, 255, 255, 0.7);
       position: absolute;
       top: 225px;
       left: 50%;
       transform: translateX(-50%);
-      padding: 13px 150px 13px 10px;
+      padding: 13px 400px 13px 10px;
       border: 3px solid;
       border-color: white;
       border-radius: 3px; }
@@ -72,22 +74,85 @@ body {
         height: 100%;
         background-image: linear-gradient(to right, transparent 50%, #559ac8 50%);
         background-size: 15px 100%; }
-    .wrap .content #list {
+    .wrap .content .content-list {
       margin-top: 50px;
       display: flex;
       flex-wrap: wrap;
-      justify-content: center; }
-      .wrap .content #list li {
+      justify-content: flex-start; }
+      .wrap .content .content-list .content-list-item {
+        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
         position: relative;
         width: 464px;
-        margin: 0 8px 36px 8px; }
-        .wrap .content #list li h2 {
+        margin: 0 8px 36px 8px;
+        padding-bottom: 22px; }
+        .wrap .content .content-list .content-list-item .item-name {
           position: absolute;
           font-size: 24px;
           color: white;
           line-height: 28px;
           left: 22px;
           top: 117px; }
+        .wrap .content .content-list .content-list-item .item-img-wrap {
+          height: 155px;
+          overflow: hidden;
+          display: flex;
+          align-items: center; }
+        .wrap .content .content-list .content-list-item .item-img {
+          max-width: 100%; }
+        .wrap .content .content-list .content-list-item .item-zone {
+          color: white;
+          position: absolute;
+          font-size: 16px;
+          line-height: 19px;
+          right: 24px;
+          top: 125px; }
+        .wrap .content .content-list .content-list-item .item-open-time,
+        .wrap .content .content-list .content-list-item .item-add,
+        .wrap .content .content-list .content-list-item .item-tel {
+          padding-top: 16px;
+          padding-left: 50px;
+          font-size: 16px;
+          line-height: 18px; }
+        .wrap .content .content-list .content-list-item .item-open-time:before {
+          position: absolute;
+          content: '';
+          width: 18px;
+          height: 18px;
+          left: 23px;
+          z-index: 1;
+          background-image: url(../img/icons_clock.png);
+          background-position: center center;
+          background-size: 18px 18px; }
+        .wrap .content .content-list .content-list-item .item-add:before {
+          position: absolute;
+          content: '';
+          width: 16px;
+          height: 20px;
+          left: 24px;
+          z-index: 1;
+          background-image: url(../img/icons_pin.png);
+          background-position: center center;
+          background-size: 16px 20px; }
+        .wrap .content .content-list .content-list-item .item-tel:before {
+          position: absolute;
+          content: '';
+          width: 12px;
+          height: 20px;
+          left: 26px;
+          z-index: 1;
+          background-image: url(../img/icons_phone.png);
+          background-position: center center;
+          background-size: 12px 20px; }
+        .wrap .content .content-list .content-list-item .tag {
+          position: absolute;
+          right: 98px;
+          bottom: 20px; }
+        .wrap .content .content-list .content-list-item .item-ticket-info {
+          position: absolute;
+          font-size: 16px;
+          line-height: 19px;
+          right: 24px;
+          bottom: 19px; }
 
 .page {
   display: inline-block;
@@ -97,11 +162,9 @@ body {
 .underLine {
   text-decoration: underline; }
 
-.list-img {
-  height: 155px;
-  overflow: hidden;
-  display: flex;
-  align-items: center; }
+.container {
+  margin: 0 auto; }
 
-.listPicture {
-  max-width: 100%; }
+@media (min-width: 1024px) {
+  .wrap {
+    max-width: 1024px; } }

@@ -3,8 +3,8 @@ let xhr = new XMLHttpRequest();
 let allZone = [];
 let allData = {};
 
-const list = document.querySelector('#list');
-const zone = document.querySelector('#zone');
+const list = document.querySelector('.content-list');
+const zone = document.querySelector('#zone-selections');
 const page = document.querySelector('.pageDeck');
 
 let currentPage = 1;
@@ -48,15 +48,22 @@ function updateList(e) {
   for (let i = 0; i < allData.length; i++) {
     if (allData[i].Zone === selectedZone) {
       amount = amount + 1;
-      if (amount <= currentPage * 4 && amount > (currentPage - 1) * 4) {
-        listStr += '<li><h2>' + allData[i].Name + '</h2><div class="list-img"><img src=' + allData[i].Picture1 + ' class="listPicture"></div>' + '<div>' + allData[i].Zone + '</div><div>' + allData[i].Opentime + '</div><div>' + allData[i].Add + '</div><div>' + allData[i].Tel + '</div><div>' + allData[i].Ticketinfo + '</div></li>';
+      if (amount <= currentPage * 8 && amount > (currentPage - 1) * 8) {
+        listStr += '<li class="content-list-item"><h2 class="item-name">' + allData[i].Name + '</h2>';
+        listStr += '<div class="item-img-wrap"><img src=' + allData[i].Picture1 + ' class="item-img"></div>';
+        listStr += '<p class="item-zone">' + allData[i].Zone + '</p>';
+        listStr += '<p class="item-open-time">' + allData[i].Opentime + '</p>';
+        listStr += '<p class="item-add">' + allData[i].Add + '</p>';
+        listStr += '<p class="item-tel">' + allData[i].Tel + '</p>';
+        listStr += '<img src="img/icons_tag.png" class="tag">'
+        listStr += '<p class="item-ticket-info">' + allData[i].Ticketinfo + '</p></li>';
       }
     }
   }
   list.innerHTML = listStr;
-  if (amount > 4) {
+  if (amount > 8) {
     pageStr = '<hr>';
-    for (let i = 1; i * 4 <= amount + 3; i++) {
+    for (let i = 1; i * 8 <= amount + 7; i++) {
       if (currentPage === i) {
         pageStr += '<span data-page="' + i + '" class="page underLine">' + i + '</span>';
       } else {
