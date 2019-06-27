@@ -1,7 +1,109 @@
+body{
+  font-family: "Noto Sans TC", sans-serif;
+  select {
+    font-family: "Noto Sans TC", sans-serif;
+  }
+}
 .wrap {
   width: 100%;
   margin: 0 auto;
   overflow: hidden;
+  header {
+    position: relative;
+    height:380px;
+    background-image: url(../img/Hero.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    h1 {
+      color:white;
+      font-size: 40px;
+      letter-spacing: 3.89px;
+      position: absolute;
+      top:89px;
+      left:50%;
+      transform: translateX(-50%);
+    }
+    #zone {
+      font-size: 18px;
+      background-color: rgba(255,255,255,0.7);
+      position: absolute;
+      top:225px;
+      left:50%;
+      transform: translateX(-50%);
+      padding: 13px 150px 13px 10px;
+      border: 3px solid;
+      border-color: rgba(255,255,255,1);
+      border-radius: 3px;
+    }
+    .popular {
+      position: absolute;
+      top:352px;
+      left:50%;
+      transform: translateX(-50%);
+      width:800px;
+      background-color: white;
+      border-radius: 5px;
+      padding:18px 0px 18px 24px;
+      box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
+      p {
+        font-size: 18px;
+        line-height: 21px;
+        padding:2px;
+      }
+      .popular-list {
+        display: flex;
+        align-items: center;
+        li {
+          background-color: green;
+          color:white;
+          font-size: 20px;
+          border-radius: 5px;
+          line-height: 23px;
+          padding: 11px 35px;
+          margin:12px 0px 0px 27px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .content {
+    height:250vh;
+    padding-top: 133px;
+    .line-wrap {
+      position: relative;
+      height: 1px;
+      .line {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 900px;
+        height: 100%;
+        background-image: linear-gradient(to right, transparent 50%, rgb(85, 154, 200) 50%);
+        background-size: 15px 100%;
+      }
+    }
+    #list{
+      margin-top:50px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      li {
+        position: relative;
+        width:464px;
+        margin:0 8px 36px 8px;
+        // height:273px;
+        h2 {
+          position: absolute;
+          font-size: 24px;
+          color:white;
+          line-height: 28px;
+          left:22px;
+          top:117px;
+        }
+      }
+    }
+  }
 }
 
 .page {
@@ -14,6 +116,13 @@
   text-decoration: underline;
 }
 
+.list-img {
+  height:155px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
 .listPicture {
-  width: 464px;
+  max-width: 100%;
 }

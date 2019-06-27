@@ -4,7 +4,7 @@ let allZone = [];
 let allData = {};
 
 const list = document.querySelector('#list');
-const Zone = document.querySelector('#Zone');
+const zone = document.querySelector('#zone');
 const page = document.querySelector('.pageDeck');
 
 let currentPage = 1;
@@ -20,15 +20,15 @@ xhr.onload = function () {
   if (xhr.readyState === 4 && xhr.status === 200) {
     const callBackData = JSON.parse(xhr.responseText);
     allData = callBackData.result.records;
-    ZoneSelectOptions();
+    zoneSelectOptions();
   }
 }
 
 page.addEventListener('click', changePage, true);
-Zone.addEventListener('change', updateList, true);
+zone.addEventListener('change', updateList, true);
 
-function ZoneSelectOptions() {
-  let options = '<option value="default">- -請選擇行政區- -</option>';
+function zoneSelectOptions() {
+  let options = '<option value="default">- - 請選擇行政區 - -</option>';
   for (let i = 0; i < allData.length; i++) {
     if (allZone.indexOf(allData[i].Zone) === -1) {
       // .indexOf()可傳回該字串第一次於陣列中出現的位置，若回傳-1則表示未曾出現於陣列中
@@ -36,7 +36,7 @@ function ZoneSelectOptions() {
       options += '<option value="' + allData[i].Zone + '">' + allData[i].Zone + '</option>';
     }
   }
-  Zone.innerHTML = options;
+  zone.innerHTML = options;
 }
 
 function updateList(e) {
@@ -49,7 +49,7 @@ function updateList(e) {
     if (allData[i].Zone === selectedZone) {
       amount = amount + 1;
       if (amount <= currentPage * 4 && amount > (currentPage - 1) * 4) {
-        listStr += '<li><h2>' + allData[i].Name + '</h2><img src=' + allData[i].Picture1 + ' class="listPicture">' + '<div>' + allData[i].Zone + '</div><div>' + allData[i].Opentime + '</div><div>' + allData[i].Add + '</div><div>' + allData[i].Tel + '</div><div>' + allData[i].Ticketinfo + '</div></li>';
+        listStr += '<li><h2>' + allData[i].Name + '</h2><div class="list-img"><img src=' + allData[i].Picture1 + ' class="listPicture"></div>' + '<div>' + allData[i].Zone + '</div><div>' + allData[i].Opentime + '</div><div>' + allData[i].Add + '</div><div>' + allData[i].Tel + '</div><div>' + allData[i].Ticketinfo + '</div></li>';
       }
     }
   }
@@ -74,7 +74,7 @@ function changePage(e) {
   if (e.target.nodeName != 'SPAN') {
     return;
   }
-  selectedZone = Zone.value;
+  selectedZone = zone.value;
   currentPage = parseInt(e.toElement.dataset.page);
   changePageClick = true;
   updateList();

@@ -4,23 +4,39 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="shortcut icon" href="#" />
   <title>KS_Travel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Noto+Sans+TC&display=swap" />
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
   <div class="wrap">
+    <header>
+      <h1>高雄旅遊資訊</h1>
+      <select name="zone" id="zone"></select>
+      <div class="popular">
+        <p>熱門行政區</p>
+        <ul class="popular-list">
+          <li class="popular-list-item" style="background-color:rgb(138, 130, 204)">苓雅區</li>
+          <li class="popular-list-item" style="background-color:rgb(255, 167, 130)">三民區</li>
+          <li class="popular-list-item" style="background-color:rgb(245, 208, 5)">新興區</li>
+          <li class="popular-list-item" style="background-color:rgb(85, 154, 200)">鹽埕區</li>
+        </ul>
+      </div>
+    </header>
     <section class="content">
-      <h1>高雄旅遊網</h1>
-      <select name="Zone" id="Zone">
-      </select>
-      <hr>
-      <ul id="list">
+      <div class="line-wrap">
+        <div class="line"></div>
+      </div>
+      <ul id="list"></ul>
       </ul>
     </section>
     <footer>
       <div class="pageDeck"></div>
+      <div class="copyRight">版權</div>
     </footer>
   </div>
   <script src="js/main.js"></script>
