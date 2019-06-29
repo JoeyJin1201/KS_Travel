@@ -62,6 +62,13 @@ body {
           cursor: pointer; }
   .wrap .content {
     padding-top: 133px; }
+    .wrap .content .list-title {
+      text-align: center;
+      margin-top: 65px;
+      margin-bottom: 6px;
+      font-size: 36px;
+      line-height: 43px;
+      color: #8a82cc; }
     .wrap .content .line-wrap {
       position: relative;
       height: 1px; }
@@ -75,15 +82,17 @@ body {
         background-image: linear-gradient(to right, transparent 50%, #559ac8 50%);
         background-size: 15px 100%; }
     .wrap .content .content-list {
-      margin-top: 50px;
+      width: 960px;
+      margin: 0px auto 0px auto;
       display: flex;
       flex-wrap: wrap;
       justify-content: flex-start; }
       .wrap .content .content-list .content-list-item {
+        text-align: justify;
         box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
         position: relative;
         width: 464px;
-        margin: 0 8px 36px 8px;
+        margin: 18px 8px;
         padding-bottom: 22px; }
         .wrap .content .content-list .content-list-item .item-name {
           position: absolute;
@@ -108,9 +117,9 @@ body {
           top: 125px; }
         .wrap .content .content-list .content-list-item .item-open-time,
         .wrap .content .content-list .content-list-item .item-add,
-        .wrap .content .content-list .content-list-item .item-tel {
-          padding-top: 16px;
-          padding-left: 50px;
+        .wrap .content .content-list .content-list-item .item-tel,
+        .wrap .content .content-list .content-list-item .item-ticket-info-wrap {
+          margin: 16px 24px 0px 50px;
           font-size: 16px;
           line-height: 18px; }
         .wrap .content .content-list .content-list-item .item-open-time:before {
@@ -143,24 +152,43 @@ body {
           background-image: url(../img/icons_phone.png);
           background-position: center center;
           background-size: 12px 20px; }
-        .wrap .content .content-list .content-list-item .tag {
-          position: absolute;
-          right: 98px;
-          bottom: 20px; }
-        .wrap .content .content-list .content-list-item .item-ticket-info {
-          position: absolute;
-          font-size: 16px;
-          line-height: 19px;
-          right: 24px;
-          bottom: 19px; }
+        .wrap .content .content-list .content-list-item .item-ticket-info-wrap {
+          display: flex;
+          justify-content: flex-end; }
+          .wrap .content .content-list .content-list-item .item-ticket-info-wrap .item-ticket-info {
+            margin-left: 8px; }
+    .wrap .content .pageDeck {
+      text-align: center; }
+      .wrap .content .pageDeck .prev,
+      .wrap .content .pageDeck .next {
+        margin: 24px; }
+  .wrap footer {
+    height: 90px;
+    margin-top: 44px;
+    background-color: #559ac8;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .wrap footer .web-site-information .web-site-name,
+    .wrap footer .web-site-information .web-site-source {
+      font-size: 14px;
+      line-height: 17px;
+      text-align: center;
+      margin: 15px auto; }
+    .wrap footer .web-site-information .web-site-name {
+      color: white; }
+    .wrap footer .web-site-information .web-site-source {
+      color: #ffd366; }
 
 .page {
   display: inline-block;
   cursor: pointer;
-  margin: 10px; }
+  margin: 24px 12px;
+  font-size: 14px;
+  line-height: 17px; }
 
-.underLine {
-  text-decoration: underline; }
+.current {
+  color: #559ac8; }
 
 .container {
   margin: 0 auto; }
@@ -168,3 +196,11 @@ body {
 @media (min-width: 1024px) {
   .wrap {
     max-width: 1024px; } }
+
+@media (max-width: 976px) {
+  .wrap .content .content-list {
+    width: 480px; } }
+
+@media (max-width: 976px) and (max-width: 496px) {
+  .wrap .content .content-list {
+    width: 100%; } }

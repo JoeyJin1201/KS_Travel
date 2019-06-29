@@ -72,6 +72,14 @@ body{
   }
   .content {
     padding-top: 133px;
+    .list-title {
+      text-align: center;
+      margin-top: 65px;
+      margin-bottom: 6px;
+      font-size: 36px;
+      line-height:43px;
+      color:rgb(138, 130, 204);
+    }
     .line-wrap {
       position: relative;
       height: 1px;
@@ -86,16 +94,18 @@ body{
         background-size: 15px 100%;
       }
     }
-    .content-list{
-      margin-top:50px;
+    .content-list {
+      width:960px;
+      margin:0px auto 0px auto;
       display: flex;
       flex-wrap: wrap;
       justify-content: flex-start;
       .content-list-item {
+        text-align: justify;
         box-shadow: 0px 1px 3px rgba(0,0,0,0.2);
         position: relative;
         width:464px;
-        margin:0 8px 36px 8px;
+        margin:18px 8px;
         padding-bottom: 22px;
         .item-name {
           position: absolute;
@@ -124,9 +134,9 @@ body{
         }
         .item-open-time,
         .item-add,
-        .item-tel {
-          padding-top: 16px;
-          padding-left:50px;
+        .item-tel,
+        .item-ticket-info-wrap {
+          margin:16px 24px 0px 50px;
           font-size: 16px;
           line-height: 18px;
         }
@@ -169,18 +179,43 @@ body{
             background-size: 12px 20px;
           }
         }
-        .tag {
-          position: absolute;
-          right:98px;
-          bottom: 20px;
+        .item-ticket-info-wrap {
+          display: flex;
+          justify-content: flex-end;
+          .item-ticket-info {
+            margin-left: 8px;
+          }
         }
-        .item-ticket-info {
-          position: absolute;
-          font-size: 16px;
-          line-height: 19px;
-          right:24px;
-          bottom: 19px;
-        }
+      }
+    }
+    .pageDeck {
+      text-align: center;
+      .prev,
+      .next {
+        margin: 24px;
+      }
+    }
+  }
+  footer {
+    height:90px;
+    margin-top: 44px;
+    background-color: rgb(85, 154, 200);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .web-site-information {
+      .web-site-name,
+      .web-site-source {
+        font-size: 14px;
+        line-height: 17px;
+        text-align: center;
+        margin:15px auto;
+      }
+      .web-site-name {
+        color: white;
+      }
+      .web-site-source {
+        color: rgb(255, 211, 102);
       }
     }
   }
@@ -189,11 +224,13 @@ body{
 .page {
   display: inline-block;
   cursor: pointer;
-  margin: 10px;
+  margin: 24px 12px;
+  font-size: 14px;
+  line-height: 17px;
 }
 
-.underLine {
-  text-decoration: underline;
+.current {
+  color:rgb(85, 154, 200);
 }
 
 .container {
@@ -203,5 +240,24 @@ body{
 @media (min-width: 1024px) {
   .wrap {
     max-width: 1024px;
+  }
+}
+
+@media (max-width: 976px) {
+  .wrap {
+    .content {
+      .content-list {
+        width: 480px;
+      }
+    }
+  }
+  @media (max-width: 496px) {
+    .wrap {
+      .content {
+        .content-list {
+          width:100%;
+        }
+      }
+    }
   }
 }

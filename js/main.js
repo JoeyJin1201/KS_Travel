@@ -55,23 +55,35 @@ function updateList(e) {
         listStr += '<p class="item-open-time">' + allData[i].Opentime + '</p>';
         listStr += '<p class="item-add">' + allData[i].Add + '</p>';
         listStr += '<p class="item-tel">' + allData[i].Tel + '</p>';
-        listStr += '<img src="img/icons_tag.png" class="tag">'
-        listStr += '<p class="item-ticket-info">' + allData[i].Ticketinfo + '</p></li>';
+        listStr += '<div class="item-ticket-info-wrap"><img src="img/icons_tag.png" class="tag">'
+        if (allData[i].Ticketinfo === '') {
+          listStr += '<p class="item-ticket-info">無票價資訊</p></div></li>';
+        } else {
+          listStr += '<p class="item-ticket-info">' + allData[i].Ticketinfo + '</p></div></li>';
+        }
       }
     }
   }
+  let listTitle = document.querySelector('.list-title');
+  if (selectedZone != 'default') {
+    listTitle.innerHTML = selectedZone;
+  } else {
+    listTitle.innerHTML = '尚未選擇區域';
+  }
   list.innerHTML = listStr;
   if (amount > 8) {
-    pageStr = '<hr>';
+    pageStr = '';
+    pageStr += '<span class="prev">< prev</span>';
     for (let i = 1; i * 8 <= amount + 7; i++) {
       if (currentPage === i) {
-        pageStr += '<span data-page="' + i + '" class="page underLine">' + i + '</span>';
+        pageStr += '<span data-page="' + i + '" class="page current">' + i + '</span>';
       } else {
         pageStr += '<span data-page="' + i + '" class="page">' + i + '</span>';
       }
     }
+    pageStr += '<span class="next">next ></span>';
   } else {
-    pageStr = '<hr>';
+    pageStr = '';
   }
   page.innerHTML = pageStr;
   changePageClick = false;
