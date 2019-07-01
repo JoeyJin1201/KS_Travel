@@ -17,18 +17,20 @@
     <header>
       <div class="banner"></div>
       <h1>高雄旅遊資訊</h1>
-      <select name="zone-selections" id="zone-selections"></select>
+      <div class="selections-wrap">
+        <select name="zone-selections" id="zone-selections"></select>
+      </div>
       <div class="popular">
         <p>熱門行政區</p>
         <ul class="popular-list">
-          <li class="popular-list-item" style="background-color:rgb(138, 130, 204)">苓雅區</li>
-          <li class="popular-list-item" style="background-color:rgb(255, 167, 130)">三民區</li>
-          <li class="popular-list-item" style="background-color:rgb(245, 208, 5)">新興區</li>
-          <li class="popular-list-item" style="background-color:rgb(85, 154, 200)">鹽埕區</li>
+          <li class="popular-list-item" data-zone="苓雅區" style="background-color:rgb(138, 130, 204)">苓雅區</li>
+          <li class="popular-list-item" data-zone="三民區" style="background-color:rgb(255, 167, 130)">三民區</li>
+          <li class="popular-list-item" data-zone="新興區" style="background-color:rgb(245, 208, 5)">新興區</li>
+          <li class="popular-list-item" data-zone="鹽埕區" style="background-color:rgb(85, 154, 200)">鹽埕區</li>
         </ul>
       </div>
     </header>
-    <section class="content">
+    <section class="content defaultSize">
       <div class="line-wrap">
         <div class="line"></div>
       </div>
