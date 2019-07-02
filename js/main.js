@@ -7,24 +7,39 @@ const list = document.querySelector('.content-list');
 const zone = document.querySelector('#zone-selections');
 const page = document.querySelector('.pageDeck');
 
+var historyList = document.querySelector('.history-list');
+var data = JSON.parse(localStorage.getItem('search-history')) || [];
+const clearBtn = document.querySelector('.clear-history');
+var time = new Date();
+clearBtn.addEventListener('click', clearAll, false);
+
+function lsPush() {
+
+  var history = {
+    searchZone: selectedZone,
+    searchTime: time
+  };
+
+  data.push(history);
+  localStorage.setItem('search-history', JSON.stringify(data));
+}
+
+function searchZone() {
+  if (changePageClick === false && e) {
+    selectedZone = e.target.value;
+  }
+}
+
+function clearAll() {
+  localStorage.clear();
+  scrollToPageTop();
+}
+
 let currentPage = 1;
 let selectedZone = 'default';
 let changePageClick = false;
 let amount = 0;
-let pageStr = '';
-
-let popularZone = document.querySelectorAll('.popular-list-item');
-
-Array.from(popularZone).forEach(eachZone => {
-  eachZone.addEventListener('click', function (event) {
-    selectedZone = this.dataset.zone;
-    console.log(this.dataset.zone);
-    updateList();
-    // if (!confirm(`sure u want to delete ${this.title}`)) {
-    //   event.preventDefault();
-    // }
-  });
-});
+let print = false;
 
 xhr.open('get', 'https://data.kcg.gov.tw/api/action/datastore_search?resource_id=92290ee5-6e61-456f-80c0-249eae2fcc97', true);
 xhr.responseType = 'text';
@@ -37,6 +52,29 @@ xhr.onload = function () {
   }
 }
 
+let popularZone = document.querySelectorAll('.popular-list-item');
+Array.from(popularZone).forEach(eachPopularZone => {
+  eachPopularZone.addEventListener('click', function () {
+    selectedZone = this.dataset.zone;
+    currentPage = 1;
+    updateList();
+  });
+});
+var str = ''
+historyPrint();
+
+let historyZone = document.querySelectorAll('.history-list-item');
+Array.from(historyZone).forEach(eachHistoryZone => {
+  eachHistoryZone.addEventListener('click', function () {
+    console.log(this.dataset.zone);
+    selectedZone = this.dataset.zone;
+    currentPage = 1;
+    updateList();
+  });
+});
+
+let content = document.getElementById('content-start');
+
 page.addEventListener('click', changePage, true);
 zone.addEventListener('change', updateList, true);
 
@@ -46,16 +84,49 @@ function zoneSelectOptions() {
     if (allZone.indexOf(allData[i].Zone) === -1) {
       // .indexOf()可傳回該字串第一次於陣列中出現的位置，若回傳-1則表示未曾出現於陣列中
       allZone.push(allData[i].Zone);
-      options += '<option value="' + allData[i].Zone + '">' + allData[i].Zone + '</option>';
+      options += '<option value="' + allData[i].Zone + '" data-zone="' + allData[i].Zone + '">' + allData[i].Zone + '</option>';
     }
   }
   zone.innerHTML = options;
 }
+function historyPrint() {
+  var getData = localStorage.getItem('search-history');
+  if (getData) {
+    str = '';
+    const set = new Set();
+    const result = JSON.parse(getData).filter(ls => !set.has(ls.searchZone) ? set.add(ls.searchZone) : false);
+    for (var i = 0; i < result.length; i++) {
+      str += '<li class="history-list-item" data-zone="' + result[i].searchZone + '">' + result[i].searchZone + '</li>';
+    }
+  }
+  let historyZone = document.querySelectorAll('.history-list-item');
+  Array.from(historyZone).forEach(eachHistoryZone => {
+    eachHistoryZone.addEventListener('click', function () {
+      console.log(this.dataset.zone);
+      selectedZone = this.dataset.zone;
+      currentPage = 1;
+      updateList();
+    });
+  });
+}
 
 function updateList(e) {
-  if (changePageClick === false && selectedZone == 'default') {
+  if (changePageClick === false && e) {
     selectedZone = e.target.value;
+    // console.log('選單' + selectedZone);
+    // } else {
+    //   console.log('標籤' + this);
+    //   selectedZone = this.dataset.zone;
+    //   console.log('標籤' + selectedZone);
   }
+  if (changePageClick === false) {
+    currentPage = 1;
+  }
+  lsPush();
+  historyList.innerHTML = str;
+  let currentZone = document.querySelector('.list-title');
+  // console.log(currentZone.value);
+  // console.log(selectedZone.dataset.zone);
   amount = parseInt(0);
   let listStr = '';
   for (let i = 0; i < allData.length; i++) {
@@ -78,18 +149,18 @@ function updateList(e) {
     }
   }
   let listTitle = document.querySelector('.list-title');
-  if (amount == 0 || selectedZone == 'default') {
-    listTitle.innerHTML = '尚未選擇區域';
-    document.querySelector('.content').classList.add('defaultSize');
+  if (selectedZone == 'default') {
+    listTitle.innerHTML = '目前尚未選擇區域';
+  } else if (amount == 0) {
+    listTitle.innerHTML = '該區目前沒有旅遊資訊';
   } else {
     listTitle.innerHTML = selectedZone;
-    document.querySelector('.content').classList.remove('defaultSize');
   }
   list.innerHTML = listStr;
   let pageAmount = Math.ceil(amount / 4);
   // console.log('總頁數:' + pageAmount);
   if (pageAmount > 1) {
-    pageStr = '';
+    let pageStr = '';
     pageStr += '<span data-page="p" class="prev">< prev</span>';
     for (let i = 1; i * 4 <= amount + 3; i++) {
       if (currentPage === i) {
@@ -100,7 +171,7 @@ function updateList(e) {
     }
     pageStr += '<span data-page="n" class="next">next ></span>';
     page.innerHTML = pageStr;
-    if (currentPage == 1 && selectedZone != 'default') {
+    if (currentPage == 1 && selectedZone !== 'default') {
       document.querySelector('.prev').classList.add('unclickable');
     } else if (currentPage == pageAmount) {
       document.querySelector('.next').classList.add('unclickable');
@@ -110,13 +181,17 @@ function updateList(e) {
     page.innerHTML = pageStr;
   }
   changePageClick = false;
+
+  scrollToContentStart();
+  if (currentZone !== selectedZone) {
+    historyPrint();
+  }
 }
 
 function changePage(e) {
-  if (e.target.nodeName != 'SPAN') {
+  if (e.target.nodeName !== 'SPAN') {
     return;
   }
-  selectedZone = zone.value;
 
   if (isNaN(parseInt(e.toElement.dataset.page)) && e.toElement.dataset.page == 'p') {
     currentPage -= 1;
@@ -128,4 +203,18 @@ function changePage(e) {
 
   changePageClick = true;
   updateList();
+}
+
+function scrollToContentStart() {
+  let target = document.getElementById('content-start');
+  if (window.scrollTo) {
+    window.scrollTo({ 'behavior': 'smooth', 'top': target.offsetTop - 12 })
+  }
+}
+
+function scrollToPageTop() {
+  let target = document.getElementById('pageTop');
+  if (window.scrollTo) {
+    window.scrollTo({ 'behavior': 'smooth', 'top': target.offsetTop })
+  }
 }

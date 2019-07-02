@@ -51,24 +51,35 @@ body {
         background-image: url(../img/icons_down.png);
         background-position: center center;
         background-size: 16px 11px; }
-    .wrap header .popular {
+    .wrap header .popular-and-history {
       margin: -28px auto 0px auto;
       width: 800px;
       background-color: white;
       border-radius: 5px;
       padding: 18px 24px;
-      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2); }
-      .wrap header .popular p {
+      box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap; }
+      .wrap header .popular-and-history .popular-title,
+      .wrap header .popular-and-history .history-title {
+        padding: 0px 30px;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
         font-size: 18px;
         line-height: 21px;
         margin: 2px; }
-      .wrap header .popular .popular-list {
+      .wrap header .popular-and-history .history-title .clear-history {
+        color: red;
+        cursor: pointer; }
+      .wrap header .popular-and-history .popular-list {
         display: flex;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: center;
         flex-wrap: wrap;
         padding: 6px 14px; }
-        .wrap header .popular .popular-list .popular-list-item {
+        .wrap header .popular-and-history .popular-list .popular-list-item {
           color: white;
           font-size: 20px;
           border-radius: 5px;
@@ -76,8 +87,21 @@ body {
           padding: 11px 35px;
           margin: 6px 15px;
           cursor: pointer; }
-  .wrap .defaultSize {
-    height: 80vh; }
+      .wrap header .popular-and-history .history-list {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 6px 14px; }
+        .wrap header .popular-and-history .history-list .history-list-item {
+          color: white;
+          font-size: 20px;
+          border-radius: 5px;
+          line-height: 23px;
+          padding: 11px 35px;
+          margin: 6px 15px;
+          cursor: pointer;
+          background-color: green; }
   .wrap .content {
     margin-bottom: 44px; }
     .wrap .content .list-title {
@@ -246,7 +270,7 @@ body {
     max-width: 1024px; } }
 
 @media (max-width: 976px) {
-  .wrap header .popular {
+  .wrap header .popular-and-history {
     width: 75%; }
   .wrap .content .content-list {
     width: 480px; } }

@@ -8,29 +8,38 @@
   <title>高雄旅遊網</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Noto+Sans+TC&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Noto+Sans+TC&display=swap">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-  <div class="wrap">
+  <div class="wrap" id="pageTop">
     <header>
       <div class="banner"></div>
       <h1>高雄旅遊資訊</h1>
       <div class="selections-wrap">
         <select name="zone-selections" id="zone-selections"></select>
       </div>
-      <div class="popular">
-        <p>熱門行政區</p>
+      <div class="popular-and-history">
+        <div class="popular-title">
+          <span>熱門行政區</span>
+        </div>
         <ul class="popular-list">
           <li class="popular-list-item" data-zone="苓雅區" style="background-color:rgb(138, 130, 204)">苓雅區</li>
           <li class="popular-list-item" data-zone="三民區" style="background-color:rgb(255, 167, 130)">三民區</li>
           <li class="popular-list-item" data-zone="新興區" style="background-color:rgb(245, 208, 5)">新興區</li>
           <li class="popular-list-item" data-zone="鹽埕區" style="background-color:rgb(85, 154, 200)">鹽埕區</li>
         </ul>
+        <div class="history-title">
+          <span>搜尋紀錄</span>
+          <span class="clear-history"><i class="fa fa-trash-o" aria-hidden="true"></i></span>
+        </div>
+        <ul class="history-list">
+        </ul>
       </div>
     </header>
-    <section class="content defaultSize">
+    <section class="content defaultSize" id="content-start">
       <div class="line-wrap">
         <div class="line"></div>
       </div>

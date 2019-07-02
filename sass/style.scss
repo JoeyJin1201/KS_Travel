@@ -60,21 +60,35 @@ body{
           background-size: 16px 11px;
       }
     }
-    .popular {
+    .popular-and-history {
       margin:-28px auto 0px auto;
       width:800px;
       background-color: white;
       border-radius: 5px;
       padding:18px 24px;
       box-shadow: 0px 0px 5px rgba(0,0,0,0.2);
-      p {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      .popular-title,
+      .history-title {
+        padding:0px 30px;
+        display: flex;
+        justify-content: space-between;
+        width:100%;
         font-size: 18px;
         line-height: 21px;
         margin:2px;
       }
+      .history-title {
+        .clear-history {
+          color:red;
+          cursor: pointer;
+        }
+      }
       .popular-list {
         display: flex;
-        justify-content: flex-start;
+        justify-content: center;
         align-items: center;
         flex-wrap: wrap;
         padding:6px 14px;
@@ -88,10 +102,24 @@ body{
           cursor: pointer;
         }
       }
+      .history-list {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        padding:6px 14px;
+        .history-list-item {
+          color:white;
+          font-size: 20px;
+          border-radius: 5px;
+          line-height: 23px;
+          padding: 11px 35px;
+          margin:6px 15px;
+          cursor: pointer;
+          background-color: green;
+        }
+      }
     }
-  }
-  .defaultSize {
-    height: 80vh;
   }
   .content {
     margin-bottom: 44px;
@@ -309,7 +337,7 @@ body{
 @media (max-width: 976px) {
   .wrap {
     header {
-      .popular {
+      .popular-and-history {
         width:75%;
       }
     }
