@@ -37,6 +37,7 @@ function clearAll() {
   let clearConfirm = confirm('確定要把搜尋紀錄清光光？');
   if (clearConfirm === true) {
     localStorage.clear();
+    data = [];
     console.log('localStorage.clear()');
     openBtnH.dataset.openlist = true;
     loadData();
