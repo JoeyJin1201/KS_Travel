@@ -79,7 +79,11 @@ body {
       .wrap header .popular-and-history .history-title .clear-history {
         color: red;
         cursor: pointer; }
+      .wrap header .popular-and-history .popular-list-closed {
+        height: 0 !important; }
       .wrap header .popular-and-history .popular-list {
+        transition: all 0.5s ease-in-out;
+        overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -107,7 +111,7 @@ body {
           padding: 11px 35px;
           margin: 6px 15px;
           cursor: pointer;
-          background-color: green; }
+          background-color: lightseagreen; }
   .wrap .content {
     margin-bottom: 44px; }
     .wrap .content .list-title {

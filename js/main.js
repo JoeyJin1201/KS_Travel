@@ -14,9 +14,10 @@ var data = JSON.parse(localStorage.getItem('search-history')) || [];
 const clearBtn = document.querySelector('.clear-history');
 var time = new Date();
 clearBtn.addEventListener('click', clearAll, false);
+openBtnP.addEventListener('click', openList, false);
 openBtnH.addEventListener('click', loadData, false);
 
-function lsPush() {
+function localStoragePush() {
 
   var history = {
     searchZone: selectedZone,
@@ -25,6 +26,21 @@ function lsPush() {
 
   data.push(history);
   localStorage.setItem('search-history', JSON.stringify(data));
+}
+
+function openList(e) {
+
+  if (e && e.target.nodeName === 'I') {
+    if (openBtnP.dataset.openlist === 'true') {
+      openBtnP.dataset.openlist = 'false';
+      openBtnP.setAttribute('style', 'transform: scaleY(-1);');
+      document.querySelector('.popular-list').classList.add('popular-list-closed');
+    } else if (openBtnP.dataset.openlist === 'false') {
+      openBtnP.dataset.openlist = 'true';
+      openBtnP.setAttribute('style', '');
+      document.querySelector('.popular-list').classList.remove('popular-list-closed');
+    }
+  }
 }
 
 function searchZone() {
@@ -49,6 +65,7 @@ let selectedZone = 'default';
 let changePageClick = false;
 let amount = 0;
 let print = false;
+let str = ''
 
 xhr.open('get', 'https://data.kcg.gov.tw/api/action/datastore_search?resource_id=92290ee5-6e61-456f-80c0-249eae2fcc97', true);
 xhr.responseType = 'text';
@@ -61,6 +78,8 @@ xhr.onload = function () {
   }
 }
 
+loadData();
+
 let popularZone = document.querySelectorAll('.popular-list-item');
 Array.from(popularZone).forEach(eachPopularZone => {
   eachPopularZone.addEventListener('click', function () {
@@ -71,11 +90,6 @@ Array.from(popularZone).forEach(eachPopularZone => {
     updateList();
   });
 });
-var str = ''
-
-historyPrint();
-
-let content = document.getElementById('content-start');
 
 page.addEventListener('click', changePage, true);
 zone.addEventListener('change', updateList, true);
@@ -91,8 +105,6 @@ function zoneSelectOptions() {
   }
   zone.innerHTML = options;
 }
-
-loadData();
 
 function loadData(e) {
   if (e && e.target.nodeName === "I") {
@@ -138,20 +150,12 @@ function updateList(e) {
   console.log(e);
   if (changePageClick === false && e) {
     selectedZone = e.target.value;
-    // console.log('選單' + selectedZone);
-    // } else {
-    //   console.log('標籤' + this);
-    //   selectedZone = this.dataset.zone;
-    //   console.log('標籤' + selectedZone);
   }
   if (changePageClick === false) {
     currentPage = 1;
   }
-  lsPush();
+  localStoragePush();
   historyList.innerHTML = str;
-  let currentZone = document.querySelector('.list-title');
-  // console.log(currentZone.value);
-  // console.log(selectedZone.dataset.zone);
   amount = parseInt(0);
   let listStr = '';
   for (let i = 0; i < allData.length; i++) {
@@ -183,7 +187,6 @@ function updateList(e) {
   }
   list.innerHTML = listStr;
   let pageAmount = Math.ceil(amount / 4);
-  // console.log('總頁數:' + pageAmount);
   if (pageAmount > 1) {
     let pageStr = '';
     pageStr += '<span data-page="p" class="prev">< prev</span>';
@@ -208,9 +211,6 @@ function updateList(e) {
   changePageClick = false;
   loadData();
   scrollToContentStart();
-  // if (currentZone !== selectedZone) {
-  //   historyPrint();
-  // }
 }
 
 function changePage(e) {

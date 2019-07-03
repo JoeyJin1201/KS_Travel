@@ -96,7 +96,12 @@ body{
           cursor: pointer;
         }
       }
+      .popular-list-closed {
+        height:0 !important;
+      }
       .popular-list {
+        transition: all 0.5s ease-in-out;
+        overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -127,7 +132,7 @@ body{
           padding: 11px 35px;
           margin:6px 15px;
           cursor: pointer;
-          background-color: green;
+          background-color: lightseagreen;
         }
       }
     }
