@@ -80,7 +80,17 @@ body{
         line-height: 21px;
         margin:2px;
       }
+      .popular-title {
+        .openBtnP {
+          padding-left: 0.5em;
+          cursor: pointer;
+        }
+      }
       .history-title {
+        .openBtnH {
+          padding-left: 0.5em;
+          cursor: pointer;
+        }
         .clear-history {
           color:red;
           cursor: pointer;
@@ -103,6 +113,7 @@ body{
         }
       }
       .history-list {
+        // transition: all 0.3s ease-in-out;
         display: flex;
         justify-content: center;
         align-items: center;

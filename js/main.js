@@ -6,12 +6,15 @@ let allData = {};
 const list = document.querySelector('.content-list');
 const zone = document.querySelector('#zone-selections');
 const page = document.querySelector('.pageDeck');
+const openBtnP = document.querySelector('.openBtnP');
+const openBtnH = document.querySelector('.openBtnH');
 
 var historyList = document.querySelector('.history-list');
 var data = JSON.parse(localStorage.getItem('search-history')) || [];
 const clearBtn = document.querySelector('.clear-history');
 var time = new Date();
 clearBtn.addEventListener('click', clearAll, false);
+openBtnH.addEventListener('click', loadData, false);
 
 function lsPush() {
 
@@ -31,8 +34,13 @@ function searchZone() {
 }
 
 function clearAll() {
-  localStorage.clear();
-  scrollToPageTop();
+  let clearConfirm = confirm('確定要把搜尋紀錄清光光？');
+  if (clearConfirm === true) {
+    localStorage.clear();
+    console.log('localStorage.clear()');
+    openBtnH.dataset.openlist = true;
+    loadData();
+  }
 }
 
 let currentPage = 1;
@@ -57,21 +65,14 @@ Array.from(popularZone).forEach(eachPopularZone => {
   eachPopularZone.addEventListener('click', function () {
     selectedZone = this.dataset.zone;
     currentPage = 1;
+    openBtnH.dataset.openlist = false;
+    loadData();
     updateList();
   });
 });
 var str = ''
-historyPrint();
 
-let historyZone = document.querySelectorAll('.history-list-item');
-Array.from(historyZone).forEach(eachHistoryZone => {
-  eachHistoryZone.addEventListener('click', function () {
-    console.log(this.dataset.zone);
-    selectedZone = this.dataset.zone;
-    currentPage = 1;
-    updateList();
-  });
-});
+historyPrint();
 
 let content = document.getElementById('content-start');
 
@@ -89,15 +90,37 @@ function zoneSelectOptions() {
   }
   zone.innerHTML = options;
 }
+
+loadData();
+
+function loadData(e) {
+  if (e && e.target.nodeName === "I") {
+    openBtnH.dataset.openlist = (openBtnH.dataset.openlist == false) ? (openBtnH.dataset.openlist == 'true') : (openBtnH.dataset.openlist == 'false');
+  }
+  if (openBtnH.dataset.openlist == 'false') {
+    openBtnH.setAttribute("style", "transform: scaleY(-1);");
+  } else if (openBtnH.dataset.openlist == 'true') {
+    openBtnH.setAttribute("style", "");
+  }
+  historyPrint();
+}
+
 function historyPrint() {
   var getData = localStorage.getItem('search-history');
-  if (getData) {
+  if (getData && openBtnH.dataset.openlist == 'true') {
     str = '';
     const set = new Set();
     const result = JSON.parse(getData).filter(ls => !set.has(ls.searchZone) ? set.add(ls.searchZone) : false);
     for (var i = 0; i < result.length; i++) {
       str += '<li class="history-list-item" data-zone="' + result[i].searchZone + '">' + result[i].searchZone + '</li>';
     }
+    historyList.innerHTML = str;
+  } else if (getData || openBtnH.dataset.openlist == 'false') {
+    str = '';
+    historyList.innerHTML = str;
+  } else {
+    str = '目前無搜尋紀錄！';
+    historyList.innerHTML = str;
   }
   let historyZone = document.querySelectorAll('.history-list-item');
   Array.from(historyZone).forEach(eachHistoryZone => {
@@ -111,6 +134,7 @@ function historyPrint() {
 }
 
 function updateList(e) {
+  console.log(e);
   if (changePageClick === false && e) {
     selectedZone = e.target.value;
     // console.log('選單' + selectedZone);
@@ -181,11 +205,11 @@ function updateList(e) {
     page.innerHTML = pageStr;
   }
   changePageClick = false;
-
+  loadData();
   scrollToContentStart();
-  if (currentZone !== selectedZone) {
-    historyPrint();
-  }
+  // if (currentZone !== selectedZone) {
+  //   historyPrint();
+  // }
 }
 
 function changePage(e) {

@@ -70,6 +70,12 @@ body {
         font-size: 18px;
         line-height: 21px;
         margin: 2px; }
+      .wrap header .popular-and-history .popular-title .openBtnP {
+        padding-left: 0.5em;
+        cursor: pointer; }
+      .wrap header .popular-and-history .history-title .openBtnH {
+        padding-left: 0.5em;
+        cursor: pointer; }
       .wrap header .popular-and-history .history-title .clear-history {
         color: red;
         cursor: pointer; }
