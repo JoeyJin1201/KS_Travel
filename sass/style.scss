@@ -326,6 +326,19 @@ body{
       }
     }
   }
+  .goTopBtn {
+    display: none;
+    cursor: pointer;
+    background-image: url(../img/btn_goTop.png);
+    width:24px;
+    height:24px;
+    position: fixed;
+    right:10%;
+    bottom:3em;
+  }
+  .show {
+    display: initial !important;
+  }
 }
 
 .page {

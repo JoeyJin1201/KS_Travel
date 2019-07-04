@@ -1,98 +1,20 @@
-let xhr = new XMLHttpRequest();
-
-let allZone = [];
-let allData = {};
-
+const allZone = [];
 const list = document.querySelector('.content-list');
 const zone = document.querySelector('#zone-selections');
 const page = document.querySelector('.pageDeck');
 const openBtnP = document.querySelector('.openBtnP');
 const openBtnH = document.querySelector('.openBtnH');
-
-var historyList = document.querySelector('.history-list');
-var data = JSON.parse(localStorage.getItem('search-history')) || [];
+const goTopBtn = document.querySelector('.goTopBtn');
+const historyList = document.querySelector('.history-list');
 const clearBtn = document.querySelector('.clear-history');
-var time = new Date();
-clearBtn.addEventListener('click', clearAll, false);
-openBtnP.addEventListener('click', openList, false);
-openBtnH.addEventListener('click', loadData, false);
+const time = new Date();
 
-function localStoragePush() {
-
-  var history = {
-    searchZone: selectedZone,
-    searchTime: time
-  };
-
-  data.push(history);
-  localStorage.setItem('search-history', JSON.stringify(data));
-}
-
-function openList(e) {
-
-  if (e && e.target.nodeName === 'I') {
-    if (openBtnP.dataset.openlist === 'true') {
-      openBtnP.dataset.openlist = 'false';
-      openBtnP.setAttribute('style', 'transform: scaleY(-1);');
-      document.querySelector('.popular-list').classList.add('popular-list-closed');
-    } else if (openBtnP.dataset.openlist === 'false') {
-      openBtnP.dataset.openlist = 'true';
-      openBtnP.setAttribute('style', '');
-      document.querySelector('.popular-list').classList.remove('popular-list-closed');
-    }
-  }
-}
-
-function searchZone() {
-  if (changePageClick === false && e) {
-    selectedZone = e.target.value;
-  }
-}
-
-function clearAll() {
-  let clearConfirm = confirm('確定要把搜尋紀錄清光光？');
-  if (clearConfirm === true) {
-    localStorage.clear();
-    data = [];
-    console.log('localStorage.clear()');
-    openBtnH.dataset.openlist = true;
-    loadData();
-  }
-}
-
+let allData = {};
 let currentPage = 1;
 let selectedZone = 'default';
 let changePageClick = false;
 let amount = 0;
-let print = false;
-let str = ''
-
-xhr.open('get', 'https://data.kcg.gov.tw/api/action/datastore_search?resource_id=92290ee5-6e61-456f-80c0-249eae2fcc97', true);
-xhr.responseType = 'text';
-xhr.send('null');
-xhr.onload = function () {
-  if (xhr.readyState === 4 && xhr.status === 200) {
-    const callBackData = JSON.parse(xhr.responseText);
-    allData = callBackData.result.records;
-    zoneSelectOptions();
-  }
-}
-
-loadData();
-
-let popularZone = document.querySelectorAll('.popular-list-item');
-Array.from(popularZone).forEach(eachPopularZone => {
-  eachPopularZone.addEventListener('click', function () {
-    selectedZone = this.dataset.zone;
-    currentPage = 1;
-    openBtnH.dataset.openlist = false;
-    loadData();
-    updateList();
-  });
-});
-
-page.addEventListener('click', changePage, true);
-zone.addEventListener('change', updateList, true);
+let str = '';
 
 function zoneSelectOptions() {
   let options = '<option value="default">- - 請選擇行政區 - -</option>';
@@ -106,48 +28,37 @@ function zoneSelectOptions() {
   zone.innerHTML = options;
 }
 
-function loadData(e) {
-  if (e && e.target.nodeName === "I") {
-    openBtnH.dataset.openlist = (openBtnH.dataset.openlist == false) ? (openBtnH.dataset.openlist == 'true') : (openBtnH.dataset.openlist == 'false');
+const xhr = new XMLHttpRequest();
+xhr.open('get', 'https://data.kcg.gov.tw/api/action/datastore_search?resource_id=92290ee5-6e61-456f-80c0-249eae2fcc97', true);
+xhr.responseType = 'text';
+xhr.send('null');
+xhr.onload = function () {
+  if (xhr.readyState === 4 && xhr.status === 200) {
+    let callBackData = JSON.parse(xhr.responseText);
+    allData = callBackData.result.records;
+    zoneSelectOptions();
   }
-  if (openBtnH.dataset.openlist == 'false') {
-    openBtnH.setAttribute("style", "transform: scaleY(-1);");
-  } else if (openBtnH.dataset.openlist == 'true') {
-    openBtnH.setAttribute("style", "");
-  }
-  historyPrint();
+};
+
+let data = JSON.parse(localStorage.getItem('search-history')) || [];
+function localStoragePush() {
+  const history = {
+    searchZone: selectedZone,
+    searchTime: time,
+  };
+
+  data.push(history);
+  localStorage.setItem('search-history', JSON.stringify(data));
 }
 
-function historyPrint() {
-  var getData = localStorage.getItem('search-history');
-  if (getData && openBtnH.dataset.openlist == 'true') {
-    str = '';
-    const set = new Set();
-    const result = JSON.parse(getData).filter(ls => !set.has(ls.searchZone) ? set.add(ls.searchZone) : false);
-    for (var i = 0; i < result.length; i++) {
-      str += '<li class="history-list-item" data-zone="' + result[i].searchZone + '">' + result[i].searchZone + '</li>';
-    }
-    historyList.innerHTML = str;
-  } else if (getData || openBtnH.dataset.openlist == 'false') {
-    str = '';
-    historyList.innerHTML = str;
-  } else {
-    str = '目前無搜尋紀錄！';
-    historyList.innerHTML = str;
+function scrollToContentStart() {
+  let target = document.getElementById('content-start');
+  if (window.scrollTo) {
+    window.scrollTo({ 'behavior': 'smooth', 'top': target.offsetTop - 12 });
   }
-  let historyZone = document.querySelectorAll('.history-list-item');
-  Array.from(historyZone).forEach(eachHistoryZone => {
-    eachHistoryZone.addEventListener('click', function () {
-      console.log(this.dataset.zone);
-      selectedZone = this.dataset.zone;
-      currentPage = 1;
-      updateList();
-    });
-  });
 }
 
 function updateList(e) {
-  console.log(e);
   if (changePageClick === false && e) {
     selectedZone = e.target.value;
   }
@@ -160,7 +71,7 @@ function updateList(e) {
   let listStr = '';
   for (let i = 0; i < allData.length; i++) {
     if (allData[i].Zone === selectedZone) {
-      amount = amount + 1;
+      amount += 1;
       if (amount <= currentPage * 4 && amount > (currentPage - 1) * 4) {
         listStr += '<li class="content-list-item"><h2 class="item-name">' + allData[i].Name + '</h2>';
         listStr += '<div class="item-img-wrap"><img src=' + allData[i].Picture1 + ' class="item-img"></div>';
@@ -177,18 +88,18 @@ function updateList(e) {
       }
     }
   }
-  let listTitle = document.querySelector('.list-title');
-  if (selectedZone == 'default') {
+  const listTitle = document.querySelector('.list-title');
+  if (selectedZone === 'default') {
     listTitle.innerHTML = '目前尚未選擇區域';
-  } else if (amount == 0) {
+  } else if (amount === 0) {
     listTitle.innerHTML = '該區目前沒有旅遊資訊';
   } else {
     listTitle.innerHTML = selectedZone;
   }
   list.innerHTML = listStr;
-  let pageAmount = Math.ceil(amount / 4);
+  const pageAmount = Math.ceil(amount / 4);
+  let pageStr = '';
   if (pageAmount > 1) {
-    let pageStr = '';
     pageStr += '<span data-page="p" class="prev">< prev</span>';
     for (let i = 1; i * 4 <= amount + 3; i++) {
       if (currentPage === i) {
@@ -199,9 +110,9 @@ function updateList(e) {
     }
     pageStr += '<span data-page="n" class="next">next ></span>';
     page.innerHTML = pageStr;
-    if (currentPage == 1 && selectedZone !== 'default') {
+    if (currentPage === 1 && selectedZone !== 'default') {
       document.querySelector('.prev').classList.add('unclickable');
-    } else if (currentPage == pageAmount) {
+    } else if (currentPage === pageAmount) {
       document.querySelector('.next').classList.add('unclickable');
     }
   } else {
@@ -213,33 +124,123 @@ function updateList(e) {
   scrollToContentStart();
 }
 
+function historyPrint() {
+  const getData = localStorage.getItem('search-history');
+  if (getData && openBtnH.dataset.openlist === 'true') {
+    str = '';
+    const set = new Set();
+    const result = JSON.parse(getData).filter(ls => !set.has(ls.searchZone) ? set.add(ls.searchZone) : false);
+    // localStorage中重複地區的物件只取其一地區
+    for (let i = 0; i < result.length; i++) {
+      str += '<li class="history-list-item" data-zone="' + result[i].searchZone + '">' + result[i].searchZone + '</li>';
+    }
+    historyList.innerHTML = str;
+  } else if (getData || openBtnH.dataset.openlist === 'false') {
+    str = '';
+    historyList.innerHTML = str;
+  } else {
+    str = '目前無搜尋紀錄！';
+    historyList.innerHTML = str;
+  }
+  const historyZone = document.querySelectorAll('.history-list-item');
+  Array.from(historyZone).forEach(eachHistoryZone => {
+    eachHistoryZone.addEventListener('click', function () {
+      console.log(this.dataset.zone);
+      selectedZone = this.dataset.zone;
+      currentPage = 1;
+      updateList();
+    });
+  });
+}
+
+function loadData(e) {
+  if (e && e.target.nodeName === 'I') {
+    openBtnH.dataset.openlist = (openBtnH.dataset.openlist === false) ? (openBtnH.dataset.openlist === 'true') : (openBtnH.dataset.openlist === 'false');
+  }
+  if (openBtnH.dataset.openlist === 'false') {
+    openBtnH.setAttribute('style', 'transform: scaleY(-1);');
+  } else if (openBtnH.dataset.openlist === 'true') {
+    openBtnH.setAttribute('style', '');
+  }
+  historyPrint();
+}
+
+function openList(e) {
+  if (e && e.target.nodeName === 'I') {
+    if (openBtnP.dataset.openlist === 'true') {
+      openBtnP.dataset.openlist = 'false';
+      openBtnP.setAttribute('style', 'transform: scaleY(-1);');
+      document.querySelector('.popular-list').classList.add('popular-list-closed');
+    } else if (openBtnP.dataset.openlist === 'false') {
+      openBtnP.dataset.openlist = 'true';
+      openBtnP.setAttribute('style', '');
+      document.querySelector('.popular-list').classList.remove('popular-list-closed');
+    }
+  }
+}
+
+function clearAll() {
+  const clearConfirm = confirm('確定要把搜尋紀錄清光光？');
+  if (clearConfirm === true) {
+    localStorage.clear();
+    data = [];
+    console.log('localStorage.clear()');
+    openBtnH.dataset.openlist = true;
+    loadData();
+  }
+}
+
+loadData();
+
+const popularZone = document.querySelectorAll('.popular-list-item');
+Array.from(popularZone).forEach(eachPopularZone => {
+  eachPopularZone.addEventListener('click', function () {
+    selectedZone = this.dataset.zone;
+    currentPage = 1;
+    openBtnH.dataset.openlist = false;
+    loadData();
+    updateList();
+  });
+});
+
 function changePage(e) {
   if (e.target.nodeName !== 'SPAN') {
     return;
   }
 
-  if (isNaN(parseInt(e.toElement.dataset.page)) && e.toElement.dataset.page == 'p') {
+  if (isNaN(parseInt(e.toElement.dataset.page, 10)) && e.toElement.dataset.page === 'p') {
     currentPage -= 1;
-  } else if (isNaN(parseInt(e.toElement.dataset.page)) && e.toElement.dataset.page == 'n') {
+  } else if (isNaN(parseInt(e.toElement.dataset.page, 10)) && e.toElement.dataset.page === 'n') {
     currentPage += 1;
   } else {
-    currentPage = parseInt(e.toElement.dataset.page);
+    currentPage = parseInt(e.toElement.dataset.page, 10);
   }
 
   changePageClick = true;
   updateList();
 }
 
-function scrollToContentStart() {
-  let target = document.getElementById('content-start');
+page.addEventListener('click', changePage, true);
+zone.addEventListener('change', updateList, true);
+
+function scrollToPageTop() {
+  const target = document.getElementById('pageTop');
   if (window.scrollTo) {
-    window.scrollTo({ 'behavior': 'smooth', 'top': target.offsetTop - 12 })
+    window.scrollTo({ 'behavior': 'smooth', 'top': target.offsetTop });
   }
 }
 
-function scrollToPageTop() {
-  let target = document.getElementById('pageTop');
-  if (window.scrollTo) {
-    window.scrollTo({ 'behavior': 'smooth', 'top': target.offsetTop })
+function countScrollAmount() {
+  if (window.pageYOffset >= 200) {
+    goTopBtn.classList.add('show');
+  } else {
+    goTopBtn.classList.remove('show');
   }
 }
+
+window.addEventListener('scroll', countScrollAmount, false);
+
+clearBtn.addEventListener('click', clearAll, false);
+openBtnP.addEventListener('click', openList, false);
+openBtnH.addEventListener('click', loadData, false);
+goTopBtn.addEventListener('click', scrollToPageTop, false);

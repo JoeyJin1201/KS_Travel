@@ -261,6 +261,17 @@ body {
       color: white; }
     .wrap footer .web-site-information .web-site-source {
       color: #ffd366; }
+  .wrap .goTopBtn {
+    display: none;
+    cursor: pointer;
+    background-image: url(../img/btn_goTop.png);
+    width: 24px;
+    height: 24px;
+    position: fixed;
+    right: 10%;
+    bottom: 3em; }
+  .wrap .show {
+    display: initial !important; }
 
 .page {
   display: inline-block;
