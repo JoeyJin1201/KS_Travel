@@ -145,7 +145,6 @@ function historyPrint() {
   const historyZone = document.querySelectorAll('.history-list-item');
   Array.from(historyZone).forEach(eachHistoryZone => {
     eachHistoryZone.addEventListener('click', function () {
-      console.log(this.dataset.zone);
       selectedZone = this.dataset.zone;
       currentPage = 1;
       updateList();
@@ -184,7 +183,6 @@ function clearAll() {
   if (clearConfirm === true) {
     localStorage.clear();
     data = [];
-    console.log('localStorage.clear()');
     openBtnH.dataset.openlist = true;
     loadData();
   }
