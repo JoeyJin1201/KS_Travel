@@ -52,7 +52,7 @@ function localStoragePush() {
 }
 
 function scrollToContentStart() {
-  let target = document.getElementById('content-start');
+  const target = document.getElementById('content-start');
   if (window.scrollTo) {
     window.scrollTo({ 'behavior': 'smooth', 'top': target.offsetTop - 12 });
   }
